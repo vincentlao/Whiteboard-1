@@ -35,7 +35,7 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <toolbarItems>
                         <barButtonItem systemItem="undo" id="xhW-rm-end"/>
@@ -46,6 +46,9 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="trash" id="Pev-Ea-9Qt"/>
                         <barButtonItem key="rightBarButtonItem" title="Color" id="TMG-zw-YWw"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="view" destination="8bC-Xf-vdC" id="mNw-1M-avf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
