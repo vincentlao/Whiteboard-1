@@ -40,6 +40,7 @@
 		DC41CD6C1B62CA7500F06419 /* WhiteboardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WhiteboardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC41CD711B62CA7500F06419 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC41CD721B62CA7500F06419 /* WhiteboardTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WhiteboardTests.m; sourceTree = "<group>"; };
+		DC41CD7C1B62CB5B00F06419 /* Whiteboard Challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Whiteboard Challenge.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +89,7 @@
 				DC41CD601B62CA7500F06419 /* Main.storyboard */,
 				DC41CD631B62CA7500F06419 /* Images.xcassets */,
 				DC41CD651B62CA7500F06419 /* LaunchScreen.xib */,
+				DC41CD7C1B62CB5B00F06419 /* Whiteboard Challenge.txt */,
 				DC41CD561B62CA7500F06419 /* Supporting Files */,
 			);
 			path = Whiteboard;
