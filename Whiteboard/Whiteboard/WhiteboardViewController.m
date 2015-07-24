@@ -6,13 +6,13 @@
 //  Copyright (c) 2015 Brian Sinnicke. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "WhiteboardViewController.h"
 
-@interface ViewController ()
+@interface WhiteboardViewController ()
 
 @end
 
-@implementation ViewController
+@implementation WhiteboardViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
