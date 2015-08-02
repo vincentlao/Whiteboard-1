@@ -37,7 +37,18 @@
 #pragma mark - IBActions
 - (IBAction)trashAction:(id)sender
 {
-    self.primaryImageView.image = nil;
+    if (self.primaryImageView.image != nil)
+    {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Clear Drawing" message:@"Are you sure?" preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+            self.primaryImageView.image = nil;
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+        }]];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+            [alertController dismissViewControllerAnimated:YES completion:nil];
+        }]];
+        [self presentViewController:alertController animated:YES completion:nil];
+    }
 }
 - (IBAction)undoAction:(id)sender
 {
@@ -52,7 +63,7 @@
     }
     else
     {
-        [self trashAction:nil];
+        self.primaryImageView.image = nil;
     }
 }
 - (IBAction)redoAction:(id)sender
@@ -68,27 +79,30 @@
     }
     else
     {
-        [self trashAction:nil];
+        self.primaryImageView.image = nil;
     }
 }
 - (IBAction)emailAction:(id)sender
 {
-    if ([MFMailComposeViewController canSendMail])
+    if (self.primaryImageView.image != nil)
     {
-        MFMailComposeViewController *compose = [MFMailComposeViewController new];
-        [compose setMailComposeDelegate:self];
-        if (self.primaryImageView.image != nil)
+        if ([MFMailComposeViewController canSendMail])
         {
+            MFMailComposeViewController *compose = [MFMailComposeViewController new];
+            [compose setMailComposeDelegate:self];
+            
             UIImage *image = self.primaryImageView.image;
             NSData *imgData = UIImagePNGRepresentation(image);
             [compose addAttachmentData:imgData mimeType:@"image/png" fileName:@"drawing.png"];
+            
+            [compose setSubject:@"Hi, take a look at my drawing from Whiteboard app."];
+            
+            if (compose) [self presentViewController:compose animated:YES completion:^(void) {}];
         }
-        [compose setSubject:@"Hi, take a look at my drawing from Whiteboard"];
-        if (compose && self.primaryImageView.image != nil) [self presentViewController:compose animated:YES completion:^(void) {}];
-    }
-    else
-    {
-        [[[UIAlertView alloc] initWithTitle:@"Oops" message:@"Unable to compose an email." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        else
+        {
+            [[[UIAlertView alloc] initWithTitle:@"Oops" message:@"Unable to compose an email." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        }
     }
 }
 #pragma mark - MFMailComposeViewDelegate
@@ -174,7 +188,6 @@
     [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0f];
     self.primaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
     [self.drawingArray addObject:self.primaryImageView.image];
-    
     self.secondaryImageView.image = nil;
     UIGraphicsEndImageContext();
 }
