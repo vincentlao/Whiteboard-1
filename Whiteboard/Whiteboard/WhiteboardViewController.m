@@ -8,16 +8,16 @@
 
 #import "WhiteboardViewController.h"
 
-#define LINE_WIDTH 10.0f
+#define THICKNESS 10.0f
 
 @import MessageUI;
 
 @interface WhiteboardViewController () <MFMailComposeViewControllerDelegate>
-@property (nonatomic) CGPoint lastPoint;
 @property (weak, nonatomic) IBOutlet UIImageView *primaryImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *secondaryImageView;
 @property (nonatomic, assign) BOOL didMoved;
-@property (nonatomic) CGFloat lineWidth;
+@property (nonatomic) CGPoint lastPoint;
+@property (nonatomic) CGFloat thickness;
 @property (nonatomic) CGColorRef colorRef;
 @property (strong, nonatomic) NSMutableArray *drawingArray;
 @property (strong, nonatomic) NSMutableArray *undoArray;
@@ -29,7 +29,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.lineWidth = LINE_WIDTH;
+    self.thickness = THICKNESS;
     self.colorRef = [UIColor blackColor].CGColor;
     self.drawingArray = [NSMutableArray new];
     self.undoArray = [NSMutableArray new];
@@ -42,6 +42,8 @@
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Clear Drawing" message:@"Are you sure?" preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             self.primaryImageView.image = nil;
+            [self.drawingArray removeAllObjects];
+            [self.undoArray removeAllObjects];
             [alertController dismissViewControllerAnimated:YES completion:nil];
         }]];
         [alertController addAction:[UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
@@ -150,7 +152,7 @@
     UITouch *touch = [[event allTouches] anyObject];
     CGPoint point = [touch locationInView:touch.view];
     
-    [self drawToPoint:point fromPoint:self.lastPoint WithLineWidth:self.lineWidth andColorRef:self.colorRef];
+    [self drawToPoint:point fromPoint:self.lastPoint WithThickness:self.thickness andColorRef:self.colorRef];
     
     self.lastPoint = point;
     self.didMoved = YES;
@@ -162,19 +164,19 @@
     
     if (self.didMoved == NO)
     {
-        [self drawToPoint:point fromPoint:self.lastPoint WithLineWidth:self.lineWidth andColorRef:self.colorRef];
+        [self drawToPoint:point fromPoint:self.lastPoint WithThickness:self.thickness andColorRef:self.colorRef];
     }
     [self saveImageContextToPrimary];
 }
 #pragma mark - Drawing
--(void)drawToPoint:(CGPoint)toPoint fromPoint:(CGPoint)fromPoint WithLineWidth:(CGFloat)width andColorRef:(CGColorRef)colorRef
+-(void)drawToPoint:(CGPoint)toPoint fromPoint:(CGPoint)fromPoint WithThickness:(CGFloat)thickness andColorRef:(CGColorRef)colorRef
 {
     UIGraphicsBeginImageContext(self.view.frame.size);
     [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     CGContextMoveToPoint(UIGraphicsGetCurrentContext(), fromPoint.x, fromPoint.y);
     CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), toPoint.x, toPoint.y);
     CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), width);
+    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), thickness);
     CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), colorRef);
     CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModeNormal);
     CGContextStrokePath(UIGraphicsGetCurrentContext());
