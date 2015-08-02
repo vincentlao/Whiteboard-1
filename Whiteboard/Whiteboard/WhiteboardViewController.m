@@ -10,7 +10,9 @@
 
 #define LINE_WIDTH 10.0f
 
-@interface WhiteboardViewController ()
+@import MessageUI;
+
+@interface WhiteboardViewController () <MFMailComposeViewControllerDelegate>
 @property (nonatomic) CGPoint lastPoint;
 @property (weak, nonatomic) IBOutlet UIImageView *primaryImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *secondaryImageView;
@@ -26,6 +28,72 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.lineWidth = LINE_WIDTH;
+}
+#pragma mark - IBActions
+- (IBAction)trashAction:(id)sender
+{
+    self.primaryImageView.image = nil;
+}
+- (IBAction)undoAction:(id)sender
+{
+    
+}
+- (IBAction)redoAction:(id)sender
+{
+    
+}
+- (IBAction)emailAction:(id)sender
+{
+    if ([MFMailComposeViewController canSendMail])
+    {
+        MFMailComposeViewController *controller = [MFMailComposeViewController new];
+        [controller setMailComposeDelegate:self];
+        if (self.primaryImageView.image != nil)
+        {
+            UIImage *image = self.primaryImageView.image;
+            NSData *imgData = UIImagePNGRepresentation(image);
+            [controller addAttachmentData:imgData mimeType:@"image/png" fileName:@"drawing.png"];
+        }
+        NSString *subject = [NSString stringWithFormat:@"Look at my drawing I created at %@", [NSDate date]];
+        [controller setSubject:subject];
+        if (controller && self.primaryImageView.image != nil) [self presentViewController:controller animated:YES completion:^(void) {}];
+    }
+    else
+    {
+        [[[UIAlertView alloc] initWithTitle:@"Oops" message:@"Unable to compose an email." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+    }
+}
+#pragma mark - MFMailComposeViewDelegate
+-(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+        {
+            // user cancelled
+            break;
+        }
+        case MFMailComposeResultSaved:
+        {
+            // user saved
+            break;
+        }
+        case MFMailComposeResultSent:
+        {
+            // user sent
+            break;
+        }
+        case MFMailComposeResultFailed:
+        {
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+    [self dismissViewControllerAnimated:YES completion:^(void) {}];
 }
 #pragma mark - Touch events
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

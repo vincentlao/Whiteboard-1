@@ -55,12 +55,28 @@
                         </constraints>
                     </view>
                     <toolbarItems>
-                        <barButtonItem systemItem="trash" id="LFg-S9-xDU"/>
+                        <barButtonItem systemItem="trash" id="LFg-S9-xDU">
+                            <connections>
+                                <action selector="trashAction:" destination="BYZ-38-t0r" id="lE1-Yf-Xfm"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem systemItem="flexibleSpace" id="thC-U1-4uf"/>
-                        <barButtonItem systemItem="undo" id="l3H-xH-bbv"/>
-                        <barButtonItem systemItem="redo" id="ny0-gg-gEF"/>
+                        <barButtonItem systemItem="undo" id="l3H-xH-bbv">
+                            <connections>
+                                <action selector="undoAction:" destination="BYZ-38-t0r" id="rEk-pR-Kdp"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem systemItem="redo" id="ny0-gg-gEF">
+                            <connections>
+                                <action selector="redoAction:" destination="BYZ-38-t0r" id="LFY-Tk-lfl"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem systemItem="flexibleSpace" id="RaB-iX-RZw"/>
-                        <barButtonItem systemItem="action" id="t8X-hb-nL5"/>
+                        <barButtonItem systemItem="compose" id="t8X-hb-nL5">
+                            <connections>
+                                <action selector="emailAction:" destination="BYZ-38-t0r" id="Fje-hd-GRA"/>
+                            </connections>
+                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Whiteboard" id="Opj-Hh-zd0"/>
                     <connections>
