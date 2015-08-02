@@ -14,7 +14,6 @@
 		DC41CD641B62CA7500F06419 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC41CD631B62CA7500F06419 /* Images.xcassets */; };
 		DC41CD671B62CA7500F06419 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC41CD651B62CA7500F06419 /* LaunchScreen.xib */; };
 		DC41CD731B62CA7500F06419 /* WhiteboardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DC41CD721B62CA7500F06419 /* WhiteboardTests.m */; };
-		DC41CD811B62E42500F06419 /* LineView.m in Sources */ = {isa = PBXBuildFile; fileRef = DC41CD801B62E42500F06419 /* LineView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,8 +41,6 @@
 		DC41CD711B62CA7500F06419 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC41CD721B62CA7500F06419 /* WhiteboardTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WhiteboardTests.m; sourceTree = "<group>"; };
 		DC41CD7C1B62CB5B00F06419 /* Whiteboard Challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Whiteboard Challenge.txt"; sourceTree = "<group>"; };
-		DC41CD7F1B62E42500F06419 /* LineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LineView.h; sourceTree = "<group>"; };
-		DC41CD801B62E42500F06419 /* LineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,7 +82,6 @@
 		DC41CD551B62CA7500F06419 /* Whiteboard */ = {
 			isa = PBXGroup;
 			children = (
-				DC41CD831B62E65100F06419 /* Views */,
 				DC41CD821B62E64A00F06419 /* Screens */,
 				DC41CD5A1B62CA7500F06419 /* AppDelegate.h */,
 				DC41CD5B1B62CA7500F06419 /* AppDelegate.m */,
@@ -130,15 +126,6 @@
 				DC41CD841B62E65F00F06419 /* Whiteboard */,
 			);
 			name = Screens;
-			sourceTree = "<group>";
-		};
-		DC41CD831B62E65100F06419 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				DC41CD7F1B62E42500F06419 /* LineView.h */,
-				DC41CD801B62E42500F06419 /* LineView.m */,
-			);
-			name = Views;
 			sourceTree = "<group>";
 		};
 		DC41CD841B62E65F00F06419 /* Whiteboard */ = {
@@ -250,7 +237,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DC41CD811B62E42500F06419 /* LineView.m in Sources */,
 				DC41CD5F1B62CA7500F06419 /* WhiteboardViewController.m in Sources */,
 				DC41CD5C1B62CA7500F06419 /* AppDelegate.m in Sources */,
 				DC41CD591B62CA7500F06419 /* main.m in Sources */,
@@ -450,6 +436,7 @@
 				DC41CD781B62CA7500F06419 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DC41CD791B62CA7500F06419 /* Build configuration list for PBXNativeTarget "WhiteboardTests" */ = {
 			isa = XCConfigurationList;
@@ -458,6 +445,7 @@
 				DC41CD7B1B62CA7500F06419 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -7,13 +7,12 @@
         <!--Navigation Controller-->
         <scene sceneID="0kn-XS-z9k">
             <objects>
-                <navigationController toolbarHidden="NO" id="oPD-VS-vL7" sceneMemberID="viewController">
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                <navigationController navigationBarHidden="YES" toolbarHidden="NO" hidesBarsOnTap="YES" id="oPD-VS-vL7" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="rYA-xi-FVk">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
-                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="KkW-7Z-pKt">
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="RwN-nq-Wuj">
                         <autoresizingMask key="autoresizingMask"/>
                     </toolbar>
                     <connections>
@@ -35,24 +34,44 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gg0-tq-kuo">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M9c-2L-iCs">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="M9c-2L-iCs" secondAttribute="trailing" id="25S-Ry-cis"/>
+                            <constraint firstItem="gg0-tq-kuo" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="55Q-Bu-oAg"/>
+                            <constraint firstItem="M9c-2L-iCs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JCa-E9-MMO"/>
+                            <constraint firstItem="gg0-tq-kuo" firstAttribute="bottom" secondItem="M9c-2L-iCs" secondAttribute="bottom" id="NDA-3q-43X"/>
+                            <constraint firstItem="gg0-tq-kuo" firstAttribute="trailing" secondItem="M9c-2L-iCs" secondAttribute="trailing" id="ckX-7M-wDv"/>
+                            <constraint firstAttribute="bottom" secondItem="gg0-tq-kuo" secondAttribute="bottom" id="clL-gf-tbL"/>
+                            <constraint firstItem="M9c-2L-iCs" firstAttribute="leading" secondItem="gg0-tq-kuo" secondAttribute="leading" id="tmh-8P-kQi"/>
+                            <constraint firstItem="gg0-tq-kuo" firstAttribute="top" secondItem="M9c-2L-iCs" secondAttribute="top" id="u5I-At-vfq"/>
+                        </constraints>
                     </view>
                     <toolbarItems>
-                        <barButtonItem systemItem="undo" id="xhW-rm-end"/>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="gFn-z3-wec"/>
-                        <barButtonItem systemItem="redo" id="MUw-zg-GjU"/>
+                        <barButtonItem systemItem="trash" id="LFg-S9-xDU"/>
+                        <barButtonItem systemItem="flexibleSpace" id="thC-U1-4uf"/>
+                        <barButtonItem systemItem="undo" id="l3H-xH-bbv"/>
+                        <barButtonItem systemItem="redo" id="ny0-gg-gEF"/>
+                        <barButtonItem systemItem="flexibleSpace" id="RaB-iX-RZw"/>
+                        <barButtonItem systemItem="action" id="t8X-hb-nL5"/>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Whiteboard" id="Opj-Hh-zd0">
-                        <barButtonItem key="leftBarButtonItem" systemItem="trash" id="Pev-Ea-9Qt"/>
-                        <barButtonItem key="rightBarButtonItem" title="Color" id="TMG-zw-YWw"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Whiteboard" id="Opj-Hh-zd0"/>
                     <connections>
-                        <outlet property="view" destination="8bC-Xf-vdC" id="mNw-1M-avf"/>
+                        <outlet property="primaryImageView" destination="gg0-tq-kuo" id="Pvt-IB-Q75"/>
+                        <outlet property="secondaryImageView" destination="M9c-2L-iCs" id="IOH-UE-VDh"/>
+                        <outlet property="view" destination="8bC-Xf-vdC" id="91F-Vq-dWa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1105" y="-258"/>
+            <point key="canvasLocation" x="1109" y="-258"/>
         </scene>
     </scenes>
 </document>

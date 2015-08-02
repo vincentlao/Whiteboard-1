@@ -7,57 +7,77 @@
 //
 
 #import "WhiteboardViewController.h"
-#import "LineView.h"
 
-@interface WhiteboardViewController () <LineViewDelegate>
-@property (nonatomic) CGPoint startlocation;
-@property (nonatomic) CGPoint endlocation;
+#define LINE_WIDTH 10.0f
+
+@interface WhiteboardViewController ()
+@property (nonatomic) CGPoint lastPoint;
+@property (weak, nonatomic) IBOutlet UIImageView *primaryImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *secondaryImageView;
+@property (nonatomic, assign) BOOL didMoved;
+@property (nonatomic) CGFloat lineWidth;
+@property (nonatomic) CGColorRef colorRef;
 @end
 
 @implementation WhiteboardViewController
 
-- (void)viewDidLoad
+-(void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.lineWidth = LINE_WIDTH;
 }
+#pragma mark - Touch events
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [[event allTouches] anyObject];
-    CGPoint location = [touch locationInView:touch.view];
-    NSLog(@"%@", NSStringFromCGPoint(location));
+    CGPoint point = [touch locationInView:touch.view];
     
-    self.startlocation = location;
+    self.lastPoint = point;
+    self.colorRef = [UIColor blackColor].CGColor;
 }
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [[event allTouches] anyObject];
-    CGPoint location = [touch locationInView:touch.view];
-    NSLog(@"%@", NSStringFromCGPoint(location));
+    CGPoint point = [touch locationInView:touch.view];
+    
+    [self drawToPoint:point fromPoint:self.lastPoint WithLineWidth:self.lineWidth andColorRef:self.colorRef];
+    
+    self.lastPoint = point;
+    self.didMoved = YES;
 }
 -(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [[event allTouches] anyObject];
-    CGPoint location = [touch locationInView:touch.view];
-    NSLog(@"%@", NSStringFromCGPoint(location));
-    self.endlocation = location;
-    [self addLineView];
+    CGPoint point = [touch locationInView:touch.view];
+    
+    if (self.didMoved == NO)
+    {
+        [self drawToPoint:point fromPoint:self.lastPoint WithLineWidth:self.lineWidth andColorRef:self.colorRef];
+    }
+    [self saveImageContextToPrimary];
 }
-#pragma mark - Add Line View
--(void)addLineView
+-(void)drawToPoint:(CGPoint)toPoint fromPoint:(CGPoint)fromPoint WithLineWidth:(CGFloat)width andColorRef:(CGColorRef)colorRef
 {
-    LineView *line = [[LineView alloc] initWithFrame:self.view.frame];
-    line.backgroundColor = [UIColor clearColor];
-    line.delegate = self;
-    [self.view addSubview:line];
+    UIGraphicsBeginImageContext(self.view.frame.size);
+    [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), fromPoint.x, fromPoint.y);
+    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), toPoint.x, toPoint.y);
+    CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
+    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), width);
+    CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), colorRef);
+    CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModeNormal);
+    CGContextStrokePath(UIGraphicsGetCurrentContext());
+    self.secondaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
 }
-#pragma mark - LineView Delegate
--(void)drawLineForContext:(CGContextRef)context
+-(void)saveImageContextToPrimary
 {
-    CGContextSetStrokeColorWithColor(context, [[UIColor blackColor] CGColor]);
-    CGContextSetLineWidth(context, 3.0);
-    CGContextMoveToPoint(context, self.startlocation.x, self.startlocation.y);
-    CGContextAddLineToPoint(context, self.endlocation.x, self.endlocation.y);
-    CGContextDrawPath(context, kCGPathStroke);
+    UIGraphicsBeginImageContext(self.primaryImageView.frame.size);
+    [self.primaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
+    [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0f];
+    self.primaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    self.secondaryImageView.image = nil;
+    UIGraphicsEndImageContext();
 }
 @end
