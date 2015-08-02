@@ -19,6 +19,8 @@
 @property (nonatomic, assign) BOOL didMoved;
 @property (nonatomic) CGFloat lineWidth;
 @property (nonatomic) CGColorRef colorRef;
+@property (strong, nonatomic) NSMutableArray *drawingArray;
+@property (strong, nonatomic) NSMutableArray *undoArray;
 @end
 
 @implementation WhiteboardViewController
@@ -28,6 +30,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.lineWidth = LINE_WIDTH;
+    self.colorRef = [UIColor blackColor].CGColor;
+    self.drawingArray = [NSMutableArray new];
+    self.undoArray = [NSMutableArray new];
 }
 #pragma mark - IBActions
 - (IBAction)trashAction:(id)sender
@@ -36,27 +41,50 @@
 }
 - (IBAction)undoAction:(id)sender
 {
-    
+    if ([self.drawingArray lastObject] != nil)
+    {
+        [self.undoArray addObject:[self.drawingArray lastObject]];
+        [self.drawingArray removeLastObject];
+    }
+    if ([self.drawingArray count] > 0)
+    {
+        self.primaryImageView.image = [self.drawingArray lastObject];
+    }
+    else
+    {
+        [self trashAction:nil];
+    }
 }
 - (IBAction)redoAction:(id)sender
 {
-    
+    if ([self.undoArray lastObject] != nil)
+    {
+        [self.drawingArray addObject:[self.undoArray lastObject]];
+        [self.undoArray removeLastObject];
+    }
+    if ([self.drawingArray count] > 0)
+    {
+        self.primaryImageView.image = [self.drawingArray lastObject];
+    }
+    else
+    {
+        [self trashAction:nil];
+    }
 }
 - (IBAction)emailAction:(id)sender
 {
     if ([MFMailComposeViewController canSendMail])
     {
-        MFMailComposeViewController *controller = [MFMailComposeViewController new];
-        [controller setMailComposeDelegate:self];
+        MFMailComposeViewController *compose = [MFMailComposeViewController new];
+        [compose setMailComposeDelegate:self];
         if (self.primaryImageView.image != nil)
         {
             UIImage *image = self.primaryImageView.image;
             NSData *imgData = UIImagePNGRepresentation(image);
-            [controller addAttachmentData:imgData mimeType:@"image/png" fileName:@"drawing.png"];
+            [compose addAttachmentData:imgData mimeType:@"image/png" fileName:@"drawing.png"];
         }
-        NSString *subject = [NSString stringWithFormat:@"Look at my drawing I created at %@", [NSDate date]];
-        [controller setSubject:subject];
-        if (controller && self.primaryImageView.image != nil) [self presentViewController:controller animated:YES completion:^(void) {}];
+        [compose setSubject:@"Hi, take a look at my drawing from Whiteboard"];
+        if (compose && self.primaryImageView.image != nil) [self presentViewController:compose animated:YES completion:^(void) {}];
     }
     else
     {
@@ -102,7 +130,6 @@
     CGPoint point = [touch locationInView:touch.view];
     
     self.lastPoint = point;
-    self.colorRef = [UIColor blackColor].CGColor;
 }
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -125,6 +152,7 @@
     }
     [self saveImageContextToPrimary];
 }
+#pragma mark - Drawing
 -(void)drawToPoint:(CGPoint)toPoint fromPoint:(CGPoint)fromPoint WithLineWidth:(CGFloat)width andColorRef:(CGColorRef)colorRef
 {
     UIGraphicsBeginImageContext(self.view.frame.size);
@@ -145,6 +173,8 @@
     [self.primaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
     [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0f];
     self.primaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    [self.drawingArray addObject:self.primaryImageView.image];
+    
     self.secondaryImageView.image = nil;
     UIGraphicsEndImageContext();
 }
