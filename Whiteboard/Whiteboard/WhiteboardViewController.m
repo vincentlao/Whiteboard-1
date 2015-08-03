@@ -130,10 +130,16 @@
     {
         self.primaryImageView.hidden = YES;
         self.playImageView.animationImages = self.drawingArray;
+        float frames = ([self.drawingArray count] * 30) / 100; // 30 frames per second
+        self.playImageView.animationDuration = frames;
         self.playImageView.animationRepeatCount = 0;
         [self.playImageView startAnimating];
         [sender setTitle:@"Stop"];
     }
+}
+- (IBAction)eraseAction:(id)sender
+{
+    self.colorRef = [UIColor whiteColor].CGColor;
 }
 - (IBAction)blackAction:(id)sender
 {
