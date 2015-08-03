@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *playImageView;
 @property (weak, nonatomic) IBOutlet UISlider *widthSlider;
 @property (nonatomic, assign) BOOL didMoved;
+@property (nonatomic, assign) BOOL isPlaying;
 @property (nonatomic, readwrite) CGPoint lastPoint;
 @property (nonatomic, readwrite) CGFloat thickness;
 @property (nonatomic, readwrite) CGColorRef colorRef;
@@ -125,12 +126,14 @@
         self.primaryImageView.hidden = NO;
         [self.playImageView stopAnimating];
         [sender setTitle:@"Play"];
+        self.isPlaying = NO;
     }
     else
     {
+        self.isPlaying = YES;
         self.primaryImageView.hidden = YES;
         self.playImageView.animationImages = self.drawingArray;
-        float frames = ([self.drawingArray count] * 30) / 100; // 30 frames per second
+        float frames = ([self.drawingArray count] * 1) / 30;
         self.playImageView.animationDuration = frames;
         self.playImageView.animationRepeatCount = 0;
         [self.playImageView startAnimating];
@@ -222,7 +225,10 @@
     UITouch *touch = [[event allTouches] anyObject];
     CGPoint point = [touch locationInView:touch.view];
     
-    [self drawToPoint:point fromPoint:self.lastPoint WithThickness:self.thickness andColorRef:self.colorRef];
+    if (self.isPlaying == NO)
+    {
+        [self drawToPoint:point fromPoint:self.lastPoint WithThickness:self.thickness andColorRef:self.colorRef];
+    }
     
     self.lastPoint = point;
     self.didMoved = YES;
@@ -232,7 +238,7 @@
     UITouch *touch = [[event allTouches] anyObject];
     CGPoint point = [touch locationInView:touch.view];
     
-    if (self.didMoved == NO)
+    if (self.didMoved == NO && self.isPlaying == NO)
     {
         [self drawToPoint:point fromPoint:self.lastPoint WithThickness:self.thickness andColorRef:self.colorRef];
     }
