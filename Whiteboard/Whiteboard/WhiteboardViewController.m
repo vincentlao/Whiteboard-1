@@ -15,10 +15,11 @@
 @interface WhiteboardViewController () <MFMailComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *primaryImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *secondaryImageView;
+@property (weak, nonatomic) IBOutlet UISlider *widthSlider;
 @property (nonatomic, assign) BOOL didMoved;
-@property (nonatomic) CGPoint lastPoint;
-@property (nonatomic) CGFloat thickness;
-@property (nonatomic) CGColorRef colorRef;
+@property (nonatomic, readwrite) CGPoint lastPoint;
+@property (nonatomic, readwrite) CGFloat thickness;
+@property (nonatomic, readwrite) CGColorRef colorRef;
 @property (strong, nonatomic) NSMutableArray *drawingArray;
 @property (strong, nonatomic) NSMutableArray *undoArray;
 @end
@@ -30,11 +31,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     self.thickness = THICKNESS;
+    [self.widthSlider setValue:THICKNESS animated:YES];
     self.colorRef = [UIColor blackColor].CGColor;
     self.drawingArray = [NSMutableArray new];
     self.undoArray = [NSMutableArray new];
 }
 #pragma mark - IBActions
+- (IBAction)sliderValueChanged:(UISlider *)sender
+{
+    self.thickness = sender.value;
+}
 - (IBAction)trashAction:(id)sender
 {
     if (self.primaryImageView.image != nil)
@@ -106,6 +112,42 @@
             [[[UIAlertView alloc] initWithTitle:@"Oops" message:@"Unable to compose an email." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }
     }
+}
+- (IBAction)blackAction:(id)sender
+{
+    self.colorRef = [UIColor blackColor].CGColor;
+}
+- (IBAction)darkGrayAction:(id)sender
+{
+    self.colorRef = [UIColor darkGrayColor].CGColor;
+}
+- (IBAction)lightGrayAction:(id)sender
+{
+    self.colorRef = [UIColor lightGrayColor].CGColor;
+}
+- (IBAction)blueAction:(id)sender
+{
+    self.colorRef = [UIColor blueColor].CGColor;
+}
+- (IBAction)redAction:(id)sender
+{
+    self.colorRef = [UIColor redColor].CGColor;
+}
+- (IBAction)greenAction:(id)sender
+{
+    self.colorRef = [UIColor greenColor].CGColor;
+}
+- (IBAction)orangeAction:(id)sender
+{
+    self.colorRef = [UIColor orangeColor].CGColor;
+}
+- (IBAction)yellowAction:(id)sender
+{
+    self.colorRef = [UIColor yellowColor].CGColor;
+}
+- (IBAction)purpleAction:(id)sender
+{
+    self.colorRef = [UIColor purpleColor].CGColor;
 }
 #pragma mark - MFMailComposeViewDelegate
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
