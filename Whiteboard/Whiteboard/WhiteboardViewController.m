@@ -24,6 +24,7 @@
 @property (nonatomic, readwrite) CGColorRef colorRef;
 @property (strong, nonatomic) NSMutableArray *drawingArray;
 @property (strong, nonatomic) NSMutableArray *undoArray;
+@property (strong, nonatomic) NSMutableArray *playbackArray;
 @end
 
 @implementation WhiteboardViewController
@@ -37,6 +38,7 @@
     self.colorRef = [UIColor blackColor].CGColor;
     self.drawingArray = [NSMutableArray new];
     self.undoArray = [NSMutableArray new];
+    self.playbackArray = [NSMutableArray new];
 }
 #pragma mark - IBActions
 - (IBAction)sliderValueChanged:(UISlider *)sender
@@ -117,7 +119,17 @@
 }
 - (IBAction)cameraAction:(id)sender
 {
-
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Photo" message:@"Pick from where" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Library" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [alertController dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
 - (IBAction)playAction:(UIBarButtonItem *)sender
 {
@@ -132,7 +144,7 @@
     {
         self.isPlaying = YES;
         self.primaryImageView.hidden = YES;
-        self.playImageView.animationImages = self.drawingArray;
+        self.playImageView.animationImages = self.playbackArray;
         float frames = ([self.drawingArray count] * 1) / 30;
         self.playImageView.animationDuration = frames;
         self.playImageView.animationRepeatCount = 0;
@@ -257,7 +269,7 @@
     CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModeNormal);
     CGContextStrokePath(UIGraphicsGetCurrentContext());
     self.secondaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
-    //[self.drawingArray addObject:self.secondaryImageView.image];
+    [self.playbackArray addObject:self.secondaryImageView.image];
     UIGraphicsEndImageContext();
 }
 -(void)saveImageContextToPrimary
@@ -267,6 +279,7 @@
     [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0f];
     self.primaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
     [self.drawingArray addObject:self.primaryImageView.image];
+    [self.playbackArray addObject:self.secondaryImageView.image];
     self.secondaryImageView.image = nil;
     UIGraphicsEndImageContext();
 }
