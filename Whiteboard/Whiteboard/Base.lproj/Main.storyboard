@@ -35,6 +35,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jCB-cr-s8W">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gg0-tq-kuo">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
@@ -102,18 +105,42 @@
                                     </barButtonItem>
                                     <barButtonItem systemItem="flexibleSpace" id="uNG-My-2Re"/>
                                 </items>
+                                <color key="barTintColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                            </toolbar>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ut-rm-Znc">
+                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="Play" id="H8p-7j-PrI">
+                                        <connections>
+                                            <action selector="playAction:" destination="BYZ-38-t0r" id="MmW-ZV-CTH"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="flexibleSpace" id="88d-P2-3fW"/>
+                                    <barButtonItem systemItem="camera" id="py3-FD-fx7">
+                                        <connections>
+                                            <action selector="cameraAction:" destination="BYZ-38-t0r" id="YQi-VZ-y2q"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="7ut-rm-Znc" firstAttribute="leading" secondItem="pxE-KP-Abs" secondAttribute="leading" id="21T-Ds-5Ys"/>
                             <constraint firstAttribute="trailing" secondItem="M9c-2L-iCs" secondAttribute="trailing" id="25S-Ry-cis"/>
                             <constraint firstItem="gg0-tq-kuo" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="55Q-Bu-oAg"/>
                             <constraint firstItem="pxE-KP-Abs" firstAttribute="trailing" secondItem="M9c-2L-iCs" secondAttribute="trailing" id="GJU-Ec-g7k"/>
+                            <constraint firstItem="jCB-cr-s8W" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="H5g-CC-3Ka"/>
                             <constraint firstItem="M9c-2L-iCs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JCa-E9-MMO"/>
+                            <constraint firstAttribute="bottom" secondItem="jCB-cr-s8W" secondAttribute="bottom" id="JdL-bu-l0m"/>
                             <constraint firstItem="gg0-tq-kuo" firstAttribute="bottom" secondItem="M9c-2L-iCs" secondAttribute="bottom" id="NDA-3q-43X"/>
+                            <constraint firstItem="7ut-rm-Znc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="OSv-tw-Pd3"/>
+                            <constraint firstItem="jCB-cr-s8W" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="RwL-pK-Jl6"/>
                             <constraint firstItem="pxE-KP-Abs" firstAttribute="leading" secondItem="gg0-tq-kuo" secondAttribute="leading" id="Wea-AS-BXI"/>
                             <constraint firstItem="gg0-tq-kuo" firstAttribute="trailing" secondItem="M9c-2L-iCs" secondAttribute="trailing" id="ckX-7M-wDv"/>
                             <constraint firstAttribute="bottom" secondItem="gg0-tq-kuo" secondAttribute="bottom" id="clL-gf-tbL"/>
+                            <constraint firstAttribute="trailing" secondItem="jCB-cr-s8W" secondAttribute="trailing" id="hkc-Qs-Nco"/>
+                            <constraint firstItem="7ut-rm-Znc" firstAttribute="trailing" secondItem="pxE-KP-Abs" secondAttribute="trailing" id="sPl-EL-TUW"/>
                             <constraint firstItem="M9c-2L-iCs" firstAttribute="leading" secondItem="gg0-tq-kuo" secondAttribute="leading" id="tmh-8P-kQi"/>
                             <constraint firstItem="gg0-tq-kuo" firstAttribute="top" secondItem="M9c-2L-iCs" secondAttribute="top" id="u5I-At-vfq"/>
                             <constraint firstItem="pxE-KP-Abs" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="zcc-XE-WeW"/>
@@ -155,6 +182,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="playImageView" destination="jCB-cr-s8W" id="g9P-wz-OOQ"/>
                         <outlet property="primaryImageView" destination="gg0-tq-kuo" id="Pvt-IB-Q75"/>
                         <outlet property="secondaryImageView" destination="M9c-2L-iCs" id="IOH-UE-VDh"/>
                         <outlet property="view" destination="8bC-Xf-vdC" id="91F-Vq-dWa"/>

@@ -15,6 +15,7 @@
 @interface WhiteboardViewController () <MFMailComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *primaryImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *secondaryImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *playImageView;
 @property (weak, nonatomic) IBOutlet UISlider *widthSlider;
 @property (nonatomic, assign) BOOL didMoved;
 @property (nonatomic, readwrite) CGPoint lastPoint;
@@ -111,6 +112,27 @@
         {
             [[[UIAlertView alloc] initWithTitle:@"Oops" message:@"Unable to compose an email." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         }
+    }
+}
+- (IBAction)cameraAction:(id)sender
+{
+
+}
+- (IBAction)playAction:(UIBarButtonItem *)sender
+{
+    if ([sender.title isEqualToString:@"Stop"])
+    {
+        self.primaryImageView.hidden = NO;
+        [self.playImageView stopAnimating];
+        [sender setTitle:@"Play"];
+    }
+    else
+    {
+        self.primaryImageView.hidden = YES;
+        self.playImageView.animationImages = self.drawingArray;
+        self.playImageView.animationRepeatCount = 0;
+        [self.playImageView startAnimating];
+        [sender setTitle:@"Stop"];
     }
 }
 - (IBAction)blackAction:(id)sender
@@ -223,6 +245,7 @@
     CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModeNormal);
     CGContextStrokePath(UIGraphicsGetCurrentContext());
     self.secondaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+    //[self.drawingArray addObject:self.secondaryImageView.image];
     UIGraphicsEndImageContext();
 }
 -(void)saveImageContextToPrimary
