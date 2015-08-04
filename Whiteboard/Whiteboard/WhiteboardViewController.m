@@ -12,7 +12,7 @@
 
 @import MessageUI;
 
-@interface WhiteboardViewController () <MFMailComposeViewControllerDelegate>
+@interface WhiteboardViewController () <MFMailComposeViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *primaryImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *secondaryImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *playImageView;
@@ -54,6 +54,7 @@
             self.primaryImageView.image = nil;
             [self.drawingArray removeAllObjects];
             [self.undoArray removeAllObjects];
+            [self.playbackArray removeAllObjects];
             [alertController dismissViewControllerAnimated:YES completion:nil];
         }]];
         [alertController addAction:[UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
@@ -121,10 +122,23 @@
 {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Photo" message:@"Pick from where" preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"Camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        
         [alertController dismissViewControllerAnimated:YES completion:nil];
+        
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        picker.delegate = self;
+        [self presentViewController:picker animated:YES completion:nil];
+        
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"Library" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [alertController dismissViewControllerAnimated:YES completion:nil];
+        
+        UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        picker.delegate = self;
+        [self presentViewController:picker animated:YES completion:nil];
+        
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         [alertController dismissViewControllerAnimated:YES completion:nil];
@@ -133,23 +147,26 @@
 }
 - (IBAction)playAction:(UIBarButtonItem *)sender
 {
-    if ([sender.title isEqualToString:@"Stop"])
+    if ([self.playbackArray count] > 0) // FIXME: Playback is broken with uploaded image.
     {
-        self.primaryImageView.hidden = NO;
-        [self.playImageView stopAnimating];
-        [sender setTitle:@"Play"];
-        self.isPlaying = NO;
-    }
-    else
-    {
-        self.isPlaying = YES;
-        self.primaryImageView.hidden = YES;
-        self.playImageView.animationImages = self.playbackArray;
-        float frames = ([self.drawingArray count] * 1) / 30;
-        self.playImageView.animationDuration = frames;
-        self.playImageView.animationRepeatCount = 0;
-        [self.playImageView startAnimating];
-        [sender setTitle:@"Stop"];
+        if ([sender.title isEqualToString:@"Stop"])
+        {
+            self.primaryImageView.hidden = NO;
+            [self.playImageView stopAnimating];
+            [sender setTitle:@"Play"];
+            self.isPlaying = NO;
+        }
+        else
+        {
+            self.isPlaying = YES;
+            self.primaryImageView.hidden = YES;
+            self.playImageView.animationImages = self.playbackArray;
+            float frames = ([self.drawingArray count] * 1) / 30;
+            self.playImageView.animationDuration = frames;
+            self.playImageView.animationRepeatCount = 0;
+            [self.playImageView startAnimating];
+            [sender setTitle:@"Stop"];
+        }
     }
 }
 - (IBAction)eraseAction:(id)sender
@@ -191,6 +208,22 @@
 - (IBAction)purpleAction:(id)sender
 {
     self.colorRef = [UIColor purpleColor].CGColor;
+}
+#pragma mark - UIImagePickerControllerDelegate
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:^{
+        UIImage *pickedImage = (UIImage*)[info objectForKey:@"UIImagePickerControllerOriginalImage"];
+        UIImage *drawingImage = self.primaryImageView.image;
+        UIGraphicsBeginImageContext(self.view.frame.size);
+        [pickedImage drawInRect:self.view.frame];
+        [drawingImage drawInRect:self.view.frame];
+        UIImage *mergedImage = UIGraphicsGetImageFromCurrentImageContext();
+        self.primaryImageView.image = mergedImage;
+        [self.drawingArray addObject:mergedImage];
+        [self.playbackArray addObject:pickedImage];
+        UIGraphicsEndPDFContext();
+    }];
 }
 #pragma mark - MFMailComposeViewDelegate
 -(void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
