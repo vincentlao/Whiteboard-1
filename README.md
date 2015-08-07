@@ -2,5 +2,4 @@
 A tech challenge to create a whiteboard for Varsity Tutors
 
 #### iPad / iPhone
-![screenshot](https://raw.github.com/devBrian/Whiteboard/master/ipad.png)
-![screenshot](https://raw.github.com/devBrian/Whiteboard/master/iphone6.png)
+![screenshot](ipad.png)![screenshot](iphone6.png)
