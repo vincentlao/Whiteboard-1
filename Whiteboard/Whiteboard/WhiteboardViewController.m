@@ -9,8 +9,11 @@
 #import "WhiteboardViewController.h"
 
 #define THICKNESS 10.0f
+#define STOP_TITLE @"Stop"
+#define PLAY_TITLE @"Playback"
 
 @import MessageUI;
+@import MobileCoreServices;
 
 @interface WhiteboardViewController () <MFMailComposeViewControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *primaryImageView;
@@ -136,6 +139,7 @@
         
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+        picker.mediaTypes = @[(NSString *)kUTTypeImage];
         picker.delegate = self;
         [self presentViewController:picker animated:YES completion:nil];
         
@@ -147,26 +151,25 @@
 }
 - (IBAction)playAction:(UIBarButtonItem *)sender
 {
-    if ([self.playbackArray count] > 0) // FIXME: Playback is broken with uploaded image.
+    if ([self.playbackArray count] > 0) // FIXME: Playback is broken with uploaded image & undo/redo system.
     {
-        if ([sender.title isEqualToString:@"Stop"])
+        if ([sender.title isEqualToString:STOP_TITLE])
         {
             self.primaryImageView.hidden = NO;
             [self.playImageView stopAnimating];
-            [sender setTitle:@"Play"];
+            [sender setTitle:PLAY_TITLE];
             self.isPlaying = NO;
         }
         else
         {
             self.isPlaying = YES;
             self.primaryImageView.hidden = YES;
-            NSArray *args = [self.drawingArray arrayByAddingObjectsFromArray:self.playbackArray];
-            self.playImageView.animationImages = args;
-            float frames = ([args count] * 1) / 30;
+            [sender setTitle:STOP_TITLE];
+            self.playImageView.animationImages = self.playbackArray;
+            float frames = ([self.playbackArray count] * 1) / 30;
             self.playImageView.animationDuration = frames;
             self.playImageView.animationRepeatCount = 0;
             [self.playImageView startAnimating];
-            [sender setTitle:@"Stop"];
         }
     }
 }
@@ -222,7 +225,6 @@
         UIImage *mergedImage = UIGraphicsGetImageFromCurrentImageContext();
         self.primaryImageView.image = mergedImage;
         [self.drawingArray addObject:mergedImage];
-        [self.playbackArray addObject:pickedImage];
         UIGraphicsEndPDFContext();
     }];
 }
@@ -267,19 +269,16 @@
 {
     UITouch *touch = [[event allTouches] anyObject];
     CGPoint point = [touch locationInView:touch.view];
-    
     self.lastPoint = point;
 }
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [[event allTouches] anyObject];
     CGPoint point = [touch locationInView:touch.view];
-    
     if (self.isPlaying == NO)
     {
         [self drawToPoint:point fromPoint:self.lastPoint WithThickness:self.thickness andColorRef:self.colorRef];
     }
-    
     self.lastPoint = point;
     self.didMoved = YES;
 }
@@ -287,7 +286,6 @@
 {
     UITouch *touch = [[event allTouches] anyObject];
     CGPoint point = [touch locationInView:touch.view];
-    
     if (self.didMoved == NO && self.isPlaying == NO)
     {
         [self drawToPoint:point fromPoint:self.lastPoint WithThickness:self.thickness andColorRef:self.colorRef];
