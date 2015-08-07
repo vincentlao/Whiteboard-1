@@ -49,7 +49,7 @@
 {
     if (self.primaryImageView.image != nil)
     {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Clear Drawing" message:@"Are you sure?" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"!! Clear Drawing !!" message:@"Are you sure?" preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
             self.primaryImageView.image = nil;
             [self.drawingArray removeAllObjects];
@@ -108,7 +108,7 @@
             NSData *imgData = UIImagePNGRepresentation(image);
             [compose addAttachmentData:imgData mimeType:@"image/png" fileName:@"drawing.png"];
             
-            [compose setSubject:@"Hi, take a look at my drawing from Whiteboard app."];
+            [compose setSubject:@"Hi, check out my drawing from Brian's Whiteboard app."];
             
             if (compose) [self presentViewController:compose animated:YES completion:^(void) {}];
         }
@@ -120,7 +120,7 @@
 }
 - (IBAction)cameraAction:(id)sender
 {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Photo" message:@"Pick from where" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Upload a photo" message:@"Choose from .." preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"Camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
         [alertController dismissViewControllerAnimated:YES completion:nil];
@@ -160,7 +160,9 @@
         {
             self.isPlaying = YES;
             self.primaryImageView.hidden = YES;
-            self.playImageView.animationImages = self.playbackArray;
+            NSMutableArray *playback = [[NSMutableArray alloc] initWithArray:self.playbackArray];
+            [playback addObject:self.primaryImageView.image];
+            self.playImageView.animationImages = playback;
             float frames = ([self.drawingArray count] * 1) / 30;
             self.playImageView.animationDuration = frames;
             self.playImageView.animationRepeatCount = 0;

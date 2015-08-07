@@ -35,75 +35,75 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jCB-cr-s8W">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jCB-cr-s8W" userLabel="Play">
                                 <rect key="frame" x="0.0" y="64" width="600" height="536"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gg0-tq-kuo">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gg0-tq-kuo" userLabel="Primary">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M9c-2L-iCs">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="M9c-2L-iCs" userLabel="Secondary">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pxE-KP-Abs">
                                 <rect key="frame" x="0.0" y="512" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem systemItem="flexibleSpace" id="t9o-HR-Fln"/>
-                                    <barButtonItem title="Erase" id="aB7-vC-6at">
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <barButtonItem image="erase24" id="aB7-vC-6at" userLabel="Eraser">
+                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="eraseAction:" destination="BYZ-38-t0r" id="4Id-AS-EGm"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Black" id="cgJ-02-6YU">
+                                    <barButtonItem systemItem="flexibleSpace" id="bWV-ze-N3T"/>
+                                    <barButtonItem image="marker" id="cgJ-02-6YU" userLabel="Black">
                                         <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="blackAction:" destination="BYZ-38-t0r" id="fKn-n1-oUE"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Dark Gray" id="wYF-xH-BEk">
+                                    <barButtonItem image="marker" id="wYF-xH-BEk" userLabel="Dark Gray">
                                         <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="darkGrayAction:" destination="BYZ-38-t0r" id="Etg-ha-tNA"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Light Gray" id="S9U-Js-JgI">
+                                    <barButtonItem image="marker" id="S9U-Js-JgI" userLabel="Light Gray">
                                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <action selector="lightGrayAction:" destination="BYZ-38-t0r" id="hKS-9B-Dua"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Blue" id="AZ4-5R-C1C">
+                                    <barButtonItem image="marker" id="AZ4-5R-C1C" userLabel="Blue">
                                         <color key="tintColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="blueAction:" destination="BYZ-38-t0r" id="Bsp-tr-w6M"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem systemItem="flexibleSpace" id="4k9-gL-w82"/>
-                                    <barButtonItem title="Red" id="rGv-SE-KJi">
+                                    <barButtonItem image="marker" id="rGv-SE-KJi" userLabel="Red">
                                         <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="redAction:" destination="BYZ-38-t0r" id="DjB-3q-hwa"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Green" id="7FL-Gj-Pqb">
+                                    <barButtonItem image="marker" id="7FL-Gj-Pqb" userLabel="Green">
                                         <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="greenAction:" destination="BYZ-38-t0r" id="1HR-Ve-ItV"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Orange" id="oey-WR-FrQ">
+                                    <barButtonItem image="marker" id="oey-WR-FrQ" userLabel="Orange">
                                         <color key="tintColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="orangeAction:" destination="BYZ-38-t0r" id="jDX-zK-SRi"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Yellow" id="lTZ-au-3nc">
+                                    <barButtonItem image="marker" id="lTZ-au-3nc" userLabel="Yellow">
                                         <color key="tintColor" red="1" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="yellowAction:" destination="BYZ-38-t0r" id="p4C-rL-gnb"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem title="Purple" id="TAC-qe-GrB">
+                                    <barButtonItem image="marker" id="TAC-qe-GrB" userLabel="Purple">
                                         <color key="tintColor" red="0.5" green="0.0" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                                         <connections>
                                             <action selector="purpleAction:" destination="BYZ-38-t0r" id="CxL-hS-fcA"/>
@@ -113,26 +113,9 @@
                                 </items>
                                 <color key="barTintColor" red="0.43529411764705883" green="0.44313725490196076" blue="0.47450980392156861" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7ut-rm-Znc">
-                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
-                                <items>
-                                    <barButtonItem title="Play" id="H8p-7j-PrI">
-                                        <connections>
-                                            <action selector="playAction:" destination="BYZ-38-t0r" id="MmW-ZV-CTH"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem systemItem="flexibleSpace" id="88d-P2-3fW"/>
-                                    <barButtonItem systemItem="camera" id="py3-FD-fx7">
-                                        <connections>
-                                            <action selector="cameraAction:" destination="BYZ-38-t0r" id="YQi-VZ-y2q"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="7ut-rm-Znc" firstAttribute="leading" secondItem="pxE-KP-Abs" secondAttribute="leading" id="21T-Ds-5Ys"/>
                             <constraint firstAttribute="trailing" secondItem="M9c-2L-iCs" secondAttribute="trailing" id="25S-Ry-cis"/>
                             <constraint firstItem="gg0-tq-kuo" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="55Q-Bu-oAg"/>
                             <constraint firstItem="pxE-KP-Abs" firstAttribute="trailing" secondItem="M9c-2L-iCs" secondAttribute="trailing" id="GJU-Ec-g7k"/>
@@ -140,23 +123,20 @@
                             <constraint firstItem="M9c-2L-iCs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="JCa-E9-MMO"/>
                             <constraint firstAttribute="bottom" secondItem="jCB-cr-s8W" secondAttribute="bottom" id="JdL-bu-l0m"/>
                             <constraint firstItem="gg0-tq-kuo" firstAttribute="bottom" secondItem="M9c-2L-iCs" secondAttribute="bottom" id="NDA-3q-43X"/>
-                            <constraint firstItem="7ut-rm-Znc" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="OSv-tw-Pd3"/>
                             <constraint firstItem="jCB-cr-s8W" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="RwL-pK-Jl6"/>
                             <constraint firstItem="pxE-KP-Abs" firstAttribute="leading" secondItem="gg0-tq-kuo" secondAttribute="leading" id="Wea-AS-BXI"/>
                             <constraint firstItem="gg0-tq-kuo" firstAttribute="trailing" secondItem="M9c-2L-iCs" secondAttribute="trailing" id="ckX-7M-wDv"/>
                             <constraint firstAttribute="bottom" secondItem="gg0-tq-kuo" secondAttribute="bottom" id="clL-gf-tbL"/>
                             <constraint firstAttribute="trailing" secondItem="jCB-cr-s8W" secondAttribute="trailing" id="hkc-Qs-Nco"/>
-                            <constraint firstItem="7ut-rm-Znc" firstAttribute="trailing" secondItem="pxE-KP-Abs" secondAttribute="trailing" id="sPl-EL-TUW"/>
                             <constraint firstItem="M9c-2L-iCs" firstAttribute="leading" secondItem="gg0-tq-kuo" secondAttribute="leading" id="tmh-8P-kQi"/>
                             <constraint firstItem="gg0-tq-kuo" firstAttribute="top" secondItem="M9c-2L-iCs" secondAttribute="top" id="u5I-At-vfq"/>
                             <constraint firstItem="pxE-KP-Abs" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="zcc-XE-WeW"/>
                         </constraints>
                     </view>
                     <toolbarItems>
-                        <barButtonItem title="Width" id="eMV-DE-R14"/>
                         <barButtonItem style="plain" id="DTi-da-ZI4">
                             <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="10" minValue="10" maxValue="50" id="jyD-lZ-1ad">
-                                <rect key="frame" x="71" y="7" width="204" height="31"/>
+                                <rect key="frame" x="14" y="7" width="200" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="sliderValueChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="yCH-13-Vdm"/>
@@ -164,12 +144,23 @@
                             </slider>
                         </barButtonItem>
                         <barButtonItem systemItem="flexibleSpace" id="thC-U1-4uf"/>
-                        <barButtonItem systemItem="undo" id="l3H-xH-bbv">
+                        <barButtonItem title="Play" id="H8p-7j-PrI">
+                            <connections>
+                                <action selector="playAction:" destination="BYZ-38-t0r" id="MmW-ZV-CTH"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem systemItem="flexibleSpace" id="jj3-EX-jvZ"/>
+                        <barButtonItem systemItem="action" id="py3-FD-fx7">
+                            <connections>
+                                <action selector="cameraAction:" destination="BYZ-38-t0r" id="YQi-VZ-y2q"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem image="undo" id="l3H-xH-bbv">
                             <connections>
                                 <action selector="undoAction:" destination="BYZ-38-t0r" id="rEk-pR-Kdp"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem systemItem="redo" id="ny0-gg-gEF">
+                        <barButtonItem image="redo" id="ny0-gg-gEF">
                             <connections>
                                 <action selector="redoAction:" destination="BYZ-38-t0r" id="LFY-Tk-lfl"/>
                             </connections>
@@ -200,4 +191,10 @@
             <point key="canvasLocation" x="1109" y="-258"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="erase24" width="24" height="24"/>
+        <image name="marker" width="24" height="24"/>
+        <image name="redo" width="24" height="24"/>
+        <image name="undo" width="24" height="24"/>
+    </resources>
 </document>
