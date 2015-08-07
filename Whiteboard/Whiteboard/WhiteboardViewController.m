@@ -47,7 +47,7 @@
 }
 - (IBAction)trashAction:(id)sender
 {
-    if (self.primaryImageView.image != nil)
+    if (self.primaryImageView.image != nil && self.isPlaying == NO)
     {
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"!! Clear Drawing !!" message:@"Are you sure?" preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
@@ -97,7 +97,7 @@
 }
 - (IBAction)emailAction:(id)sender
 {
-    if (self.primaryImageView.image != nil)
+    if (self.primaryImageView.image != nil && self.isPlaying == NO)
     {
         if ([MFMailComposeViewController canSendMail])
         {
@@ -108,7 +108,7 @@
             NSData *imgData = UIImagePNGRepresentation(image);
             [compose addAttachmentData:imgData mimeType:@"image/png" fileName:@"drawing.png"];
             
-            [compose setSubject:@"Hi, check out my drawing from Brian's Whiteboard app."];
+            [compose setSubject:@"Check out my drawing from Brian's Whiteboard app."];
             
             if (compose) [self presentViewController:compose animated:YES completion:^(void) {}];
         }
@@ -160,10 +160,9 @@
         {
             self.isPlaying = YES;
             self.primaryImageView.hidden = YES;
-            NSMutableArray *playback = [[NSMutableArray alloc] initWithArray:self.playbackArray];
-            [playback addObject:self.primaryImageView.image];
-            self.playImageView.animationImages = playback;
-            float frames = ([self.drawingArray count] * 1) / 30;
+            NSArray *args = [self.drawingArray arrayByAddingObjectsFromArray:self.playbackArray];
+            self.playImageView.animationImages = args;
+            float frames = ([args count] * 1) / 30;
             self.playImageView.animationDuration = frames;
             self.playImageView.animationRepeatCount = 0;
             [self.playImageView startAnimating];
@@ -245,6 +244,10 @@
         case MFMailComposeResultSent:
         {
             // user sent
+            self.primaryImageView.image = nil;
+            [self.drawingArray removeAllObjects];
+            [self.undoArray removeAllObjects];
+            [self.playbackArray removeAllObjects];
             break;
         }
         case MFMailComposeResultFailed:
@@ -314,7 +317,6 @@
     [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0f];
     self.primaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
     [self.drawingArray addObject:self.primaryImageView.image];
-    [self.playbackArray addObject:self.secondaryImageView.image];
     self.secondaryImageView.image = nil;
     UIGraphicsEndImageContext();
 }
