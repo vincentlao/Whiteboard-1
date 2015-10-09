@@ -52,15 +52,15 @@
 {
     if (self.primaryImageView.image != nil && self.isPlaying == NO)
     {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"!! Clear Drawing !!" message:@"Are you sure?" preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Drawing" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Discard" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
             self.primaryImageView.image = nil;
             [self.drawingArray removeAllObjects];
             [self.undoArray removeAllObjects];
             [self.playbackArray removeAllObjects];
             [alertController dismissViewControllerAnimated:YES completion:nil];
         }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             [alertController dismissViewControllerAnimated:YES completion:nil];
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
