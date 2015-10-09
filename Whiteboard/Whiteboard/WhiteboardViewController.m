@@ -125,14 +125,16 @@
 {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Upload a photo" message:@"Choose from .." preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"Camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        
+       
         [alertController dismissViewControllerAnimated:YES completion:nil];
-        
+#if TARGET_IPHONE_SIMULATOR
+        NSLog(@"On Simulator - Camera is unavailable.");
+#else
         UIImagePickerController *picker = [[UIImagePickerController alloc] init];
         picker.sourceType = UIImagePickerControllerSourceTypeCamera;
         picker.delegate = self;
         [self presentViewController:picker animated:YES completion:nil];
-        
+#endif
     }]];
     [alertController addAction:[UIAlertAction actionWithTitle:@"Library" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [alertController dismissViewControllerAnimated:YES completion:nil];
