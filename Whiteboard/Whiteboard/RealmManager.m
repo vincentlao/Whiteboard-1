@@ -54,12 +54,21 @@
     draw.imageData = imgData;
     draw.title = title;
     draw.author = author;
+    draw.isDeleted = NO;
     draw.createdAt = [NSDate date];
+    draw.updatedAt = [NSDate date];
     [self saveRealmObject:draw];
+}
+-(void)deleteSavedDrawing:(DrawingData *)drawingData
+{
+    RLMRealm *realm = [RLMRealm defaultRealm];
+    [realm beginWriteTransaction];
+    drawingData.isDeleted = YES;
+    [realm commitWriteTransaction];
 }
 -(NSMutableArray * )getSavedDrawingArray
 {
-    RLMResults *results = [DrawingData allObjects];
+    RLMResults *results = [DrawingData objectsWhere:@"isDeleted=0"];
     NSMutableArray *array = [NSMutableArray new];
     if (results.count > 0)
     {

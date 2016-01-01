@@ -18,8 +18,10 @@
 - (NSMutableArray *)getPlaybackArray;
 
 - (void)saveDrawing:(NSData *)imgData withTitle:(NSString *)title andAuthor:(NSString *)author;
+- (void)deleteSavedDrawing:(DrawingData *)drawingData;
 - (NSMutableArray *)getSavedDrawingArray;
 
 - (void)saveDrawLine:(NSData *)imgData andFrame:(NSInteger)frame;
 - (NSMutableArray *)getDrawLinesArray;
+
 @end

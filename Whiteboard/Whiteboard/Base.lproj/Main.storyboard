@@ -170,29 +170,11 @@
                                 <action selector="saveAction:" destination="BYZ-38-t0r" id="f99-gc-rvg"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem title="Playback" id="H8p-7j-PrI">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="playAction:" destination="BYZ-38-t0r" id="MmW-ZV-CTH"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem systemItem="flexibleSpace" id="jj3-EX-jvZ"/>
-                        <barButtonItem systemItem="action" id="py3-FD-fx7">
+                        <barButtonItem systemItem="camera" id="py3-FD-fx7">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="cameraAction:" destination="BYZ-38-t0r" id="YQi-VZ-y2q"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem image="undo" id="l3H-xH-bbv">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="undoAction:" destination="BYZ-38-t0r" id="rEk-pR-Kdp"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem image="redo" id="ny0-gg-gEF">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="redoAction:" destination="BYZ-38-t0r" id="LFY-Tk-lfl"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
@@ -279,7 +261,5 @@
     <resources>
         <image name="eraser" width="24" height="24"/>
         <image name="marker" width="24" height="24"/>
-        <image name="redo" width="24" height="24"/>
-        <image name="undo" width="24" height="24"/>
     </resources>
 </document>
