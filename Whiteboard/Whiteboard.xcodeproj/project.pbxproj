@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D6AB679350B8DCB4B5DE39A /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C608B82C30683CDF551E3958 /* libPods.a */; };
+		DC3012E11C363F1E0048798F /* DrawingTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC3012E01C363F1E0048798F /* DrawingTableViewController.m */; };
 		DC41CD591B62CA7500F06419 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DC41CD581B62CA7500F06419 /* main.m */; };
 		DC41CD5C1B62CA7500F06419 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DC41CD5B1B62CA7500F06419 /* AppDelegate.m */; };
 		DC41CD5F1B62CA7500F06419 /* WhiteboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DC41CD5E1B62CA7500F06419 /* WhiteboardViewController.m */; };
@@ -14,6 +16,10 @@
 		DC41CD641B62CA7500F06419 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DC41CD631B62CA7500F06419 /* Images.xcassets */; };
 		DC41CD671B62CA7500F06419 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = DC41CD651B62CA7500F06419 /* LaunchScreen.xib */; };
 		DC41CD731B62CA7500F06419 /* WhiteboardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = DC41CD721B62CA7500F06419 /* WhiteboardTests.m */; };
+		DC9C689E1C3619D400163954 /* RealmManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9C689D1C3619D400163954 /* RealmManager.m */; };
+		DC9C68A11C361A1E00163954 /* DrawingData.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9C68A01C361A1E00163954 /* DrawingData.m */; };
+		DC9C68A41C361A2C00163954 /* PlaybackData.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9C68A31C361A2C00163954 /* PlaybackData.m */; };
+		DC9C68A71C362DDE00163954 /* DrawLinesData.m in Sources */ = {isa = PBXBuildFile; fileRef = DC9C68A61C362DDE00163954 /* DrawLinesData.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +33,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		20723145FDBC5460F0D417B7 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		A895C0B0EA83120AF7E1ED3A /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		C608B82C30683CDF551E3958 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC3012DF1C363F1E0048798F /* DrawingTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingTableViewController.h; sourceTree = "<group>"; };
+		DC3012E01C363F1E0048798F /* DrawingTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingTableViewController.m; sourceTree = "<group>"; };
 		DC41CD531B62CA7500F06419 /* Whiteboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Whiteboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC41CD571B62CA7500F06419 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC41CD581B62CA7500F06419 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -41,6 +52,14 @@
 		DC41CD711B62CA7500F06419 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DC41CD721B62CA7500F06419 /* WhiteboardTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WhiteboardTests.m; sourceTree = "<group>"; };
 		DC41CD7C1B62CB5B00F06419 /* Whiteboard Challenge.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "Whiteboard Challenge.txt"; sourceTree = "<group>"; };
+		DC9C689C1C3619D400163954 /* RealmManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RealmManager.h; sourceTree = "<group>"; };
+		DC9C689D1C3619D400163954 /* RealmManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RealmManager.m; sourceTree = "<group>"; };
+		DC9C689F1C361A1E00163954 /* DrawingData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawingData.h; sourceTree = "<group>"; };
+		DC9C68A01C361A1E00163954 /* DrawingData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawingData.m; sourceTree = "<group>"; };
+		DC9C68A21C361A2C00163954 /* PlaybackData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlaybackData.h; sourceTree = "<group>"; };
+		DC9C68A31C361A2C00163954 /* PlaybackData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlaybackData.m; sourceTree = "<group>"; };
+		DC9C68A51C362DDE00163954 /* DrawLinesData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DrawLinesData.h; sourceTree = "<group>"; };
+		DC9C68A61C362DDE00163954 /* DrawLinesData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DrawLinesData.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D6AB679350B8DCB4B5DE39A /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,12 +81,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7460FB92BCE104523BA7D54C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				20723145FDBC5460F0D417B7 /* Pods.debug.xcconfig */,
+				A895C0B0EA83120AF7E1ED3A /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D5992DA50F9E90C49D7FB5BD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C608B82C30683CDF551E3958 /* libPods.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DC3012DE1C363EC60048798F /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				DC3012DF1C363F1E0048798F /* DrawingTableViewController.h */,
+				DC3012E01C363F1E0048798F /* DrawingTableViewController.m */,
+			);
+			name = Table;
+			sourceTree = "<group>";
+		};
 		DC41CD4A1B62CA7500F06419 = {
 			isa = PBXGroup;
 			children = (
 				DC41CD551B62CA7500F06419 /* Whiteboard */,
 				DC41CD6F1B62CA7500F06419 /* WhiteboardTests */,
 				DC41CD541B62CA7500F06419 /* Products */,
+				7460FB92BCE104523BA7D54C /* Pods */,
+				D5992DA50F9E90C49D7FB5BD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -82,6 +130,8 @@
 		DC41CD551B62CA7500F06419 /* Whiteboard */ = {
 			isa = PBXGroup;
 			children = (
+				DC46A4DE1C3615A900A0D5B2 /* Managers */,
+				DC46A4DD1C36157A00A0D5B2 /* Models */,
 				DC41CD821B62E64A00F06419 /* Screens */,
 				DC41CD5A1B62CA7500F06419 /* AppDelegate.h */,
 				DC41CD5B1B62CA7500F06419 /* AppDelegate.m */,
@@ -131,10 +181,33 @@
 		DC41CD841B62E65F00F06419 /* Whiteboard */ = {
 			isa = PBXGroup;
 			children = (
+				DC3012DE1C363EC60048798F /* Table */,
 				DC41CD5D1B62CA7500F06419 /* WhiteboardViewController.h */,
 				DC41CD5E1B62CA7500F06419 /* WhiteboardViewController.m */,
 			);
 			name = Whiteboard;
+			sourceTree = "<group>";
+		};
+		DC46A4DD1C36157A00A0D5B2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DC9C689F1C361A1E00163954 /* DrawingData.h */,
+				DC9C68A01C361A1E00163954 /* DrawingData.m */,
+				DC9C68A21C361A2C00163954 /* PlaybackData.h */,
+				DC9C68A31C361A2C00163954 /* PlaybackData.m */,
+				DC9C68A51C362DDE00163954 /* DrawLinesData.h */,
+				DC9C68A61C362DDE00163954 /* DrawLinesData.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		DC46A4DE1C3615A900A0D5B2 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				DC9C689C1C3619D400163954 /* RealmManager.h */,
+				DC9C689D1C3619D400163954 /* RealmManager.m */,
+			);
+			name = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,9 +217,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DC41CD761B62CA7500F06419 /* Build configuration list for PBXNativeTarget "Whiteboard" */;
 			buildPhases = (
+				E763175314F2CFFCF5C9C9B1 /* Check Pods Manifest.lock */,
 				DC41CD4F1B62CA7500F06419 /* Sources */,
 				DC41CD501B62CA7500F06419 /* Frameworks */,
 				DC41CD511B62CA7500F06419 /* Resources */,
+				3A57E4D9BB92CAC41CE43A62 /* Embed Pods Frameworks */,
+				AB9ECC1A8CB68859BE69AAEF /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -186,6 +262,7 @@
 				TargetAttributes = {
 					DC41CD521B62CA7500F06419 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = PVKGDB3Z67;
 					};
 					DC41CD6B1B62CA7500F06419 = {
 						CreatedOnToolsVersion = 6.4;
@@ -232,14 +309,67 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3A57E4D9BB92CAC41CE43A62 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AB9ECC1A8CB68859BE69AAEF /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E763175314F2CFFCF5C9C9B1 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		DC41CD4F1B62CA7500F06419 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC9C68A41C361A2C00163954 /* PlaybackData.m in Sources */,
+				DC9C68A71C362DDE00163954 /* DrawLinesData.m in Sources */,
+				DC3012E11C363F1E0048798F /* DrawingTableViewController.m in Sources */,
 				DC41CD5F1B62CA7500F06419 /* WhiteboardViewController.m in Sources */,
+				DC9C689E1C3619D400163954 /* RealmManager.m in Sources */,
 				DC41CD5C1B62CA7500F06419 /* AppDelegate.m in Sources */,
 				DC41CD591B62CA7500F06419 /* main.m in Sources */,
+				DC9C68A11C361A1E00163954 /* DrawingData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -365,21 +495,29 @@
 		};
 		DC41CD771B62CA7500F06419 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 20723145FDBC5460F0D417B7 /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Whiteboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		DC41CD781B62CA7500F06419 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A895C0B0EA83120AF7E1ED3A /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Whiteboard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

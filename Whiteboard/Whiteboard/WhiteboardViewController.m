@@ -7,6 +7,7 @@
 //
 
 #import "WhiteboardViewController.h"
+#import "RealmManager.h"
 
 #define THICKNESS 10.0f
 #define STOP_TITLE @"Stop"
@@ -28,6 +29,8 @@
 @property (strong, nonatomic) NSMutableArray *drawingArray;
 @property (strong, nonatomic) NSMutableArray *undoArray;
 @property (strong, nonatomic) NSMutableArray *playbackArray;
+@property (nonatomic, readwrite) NSInteger playbackFrame;
+@property (nonatomic, readwrite) NSInteger drawLineFrame;
 @end
 
 @implementation WhiteboardViewController
@@ -42,6 +45,8 @@
     self.drawingArray = [NSMutableArray new];
     self.undoArray = [NSMutableArray new];
     self.playbackArray = [NSMutableArray new];
+    self.playbackFrame = 1;
+    self.drawLineFrame = 1;
 }
 #pragma mark - IBActions
 - (IBAction)sliderValueChanged:(UISlider *)sender
@@ -52,15 +57,15 @@
 {
     if (self.primaryImageView.image != nil && self.isPlaying == NO)
     {
-        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Drawing" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Discard" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
+        UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Discard Drawing?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        [alertController addAction:[UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
             self.primaryImageView.image = nil;
             [self.drawingArray removeAllObjects];
             [self.undoArray removeAllObjects];
             [self.playbackArray removeAllObjects];
             [alertController dismissViewControllerAnimated:YES completion:nil];
         }]];
-        [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [alertController addAction:[UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
             [alertController dismissViewControllerAnimated:YES completion:nil];
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
@@ -175,9 +180,32 @@
         }
     }
 }
+-(IBAction)saveAction:(id)sender
+{
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Save" message:@"Title and Author" preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"Title";
+    }];
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"Author";
+    }];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        UIImage *image = self.primaryImageView.image;
+        NSData *imgData = UIImagePNGRepresentation(image);
+        [[RealmManager sharedInstance] saveDrawing:imgData withTitle:alertController.textFields[0].text andAuthor:alertController.textFields[1].text];
+        self.primaryImageView.image = nil;
+        [self.drawingArray removeAllObjects];
+        [self.undoArray removeAllObjects];
+        [self.playbackArray removeAllObjects];
+    }]];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        
+    }]];
+    [self presentViewController:alertController animated:YES completion:nil];
+}
 - (IBAction)eraseAction:(id)sender
 {
-    self.colorRef = [UIColor whiteColor].CGColor;
+    self.colorRef = self.view.backgroundColor.CGColor;
 }
 - (IBAction)blackAction:(id)sender
 {
@@ -297,27 +325,35 @@
 #pragma mark - Drawing
 -(void)drawToPoint:(CGPoint)toPoint fromPoint:(CGPoint)fromPoint WithThickness:(CGFloat)thickness andColorRef:(CGColorRef)colorRef
 {
-    UIGraphicsBeginImageContext(self.view.frame.size);
-    [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    CGContextMoveToPoint(UIGraphicsGetCurrentContext(), fromPoint.x, fromPoint.y);
-    CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), toPoint.x, toPoint.y);
-    CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), thickness);
-    CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), colorRef);
-    CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModeNormal);
-    CGContextStrokePath(UIGraphicsGetCurrentContext());
-    self.secondaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
-    [self.playbackArray addObject:self.secondaryImageView.image];
-    UIGraphicsEndImageContext();
+    @autoreleasepool {
+        UIGraphicsBeginImageContext(self.view.frame.size);
+        [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        CGContextMoveToPoint(UIGraphicsGetCurrentContext(), fromPoint.x, fromPoint.y);
+        CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), toPoint.x, toPoint.y);
+        CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
+        CGContextSetLineWidth(UIGraphicsGetCurrentContext(), thickness);
+        CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), colorRef);
+        CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModeNormal);
+        CGContextStrokePath(UIGraphicsGetCurrentContext());
+        self.secondaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        NSData *imgData = UIImagePNGRepresentation(self.secondaryImageView.image);
+        [[RealmManager sharedInstance] savePlayback:imgData andFrame:self.playbackFrame];
+        self.playbackFrame++;
+    }
 }
 -(void)saveImageContextToPrimary
 {
-    UIGraphicsBeginImageContext(self.primaryImageView.frame.size);
-    [self.primaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
-    [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0f];
-    self.primaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
-    [self.drawingArray addObject:self.primaryImageView.image];
-    self.secondaryImageView.image = nil;
-    UIGraphicsEndImageContext();
+    @autoreleasepool {
+        UIGraphicsBeginImageContext(self.primaryImageView.frame.size);
+        [self.primaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
+        [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0f];
+        self.primaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+        NSData *imgData = UIImagePNGRepresentation(self.primaryImageView.image);
+        [[RealmManager sharedInstance] saveDrawLine:imgData andFrame:self.drawLineFrame];
+        self.drawLineFrame++;
+        self.secondaryImageView.image = nil;
+        UIGraphicsEndImageContext();
+    }
 }
 @end
