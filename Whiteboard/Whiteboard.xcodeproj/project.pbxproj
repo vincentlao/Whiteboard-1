@@ -106,7 +106,8 @@
 		DC41CD551B62CA7500F06419 /* Whiteboard */ = {
 			isa = PBXGroup;
 			children = (
-				DC41CD821B62E64A00F06419 /* Screens */,
+				DC41CD5D1B62CA7500F06419 /* WhiteboardViewController.h */,
+				DC41CD5E1B62CA7500F06419 /* WhiteboardViewController.m */,
 				DC41CD5A1B62CA7500F06419 /* AppDelegate.h */,
 				DC41CD5B1B62CA7500F06419 /* AppDelegate.m */,
 				DC41CD601B62CA7500F06419 /* Main.storyboard */,
@@ -142,23 +143,6 @@
 				DC41CD711B62CA7500F06419 /* Info.plist */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		DC41CD821B62E64A00F06419 /* Screens */ = {
-			isa = PBXGroup;
-			children = (
-				DC41CD841B62E65F00F06419 /* Whiteboard */,
-			);
-			name = Screens;
-			sourceTree = "<group>";
-		};
-		DC41CD841B62E65F00F06419 /* Whiteboard */ = {
-			isa = PBXGroup;
-			children = (
-				DC41CD5D1B62CA7500F06419 /* WhiteboardViewController.h */,
-				DC41CD5E1B62CA7500F06419 /* WhiteboardViewController.m */,
-			);
-			name = Whiteboard;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -448,10 +432,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Whiteboard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.brian.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bs.Whiteboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -463,10 +449,12 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Whiteboard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.brian.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.bs.Whiteboard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

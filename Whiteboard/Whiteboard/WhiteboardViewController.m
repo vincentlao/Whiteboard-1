@@ -44,8 +44,6 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.navigationController.toolbarHidden = NO;
-    self.navigationController.hidesBarsOnTap = YES;
 }
 #pragma mark - IBActions
 - (IBAction)sliderValueChanged:(UISlider *)sender
