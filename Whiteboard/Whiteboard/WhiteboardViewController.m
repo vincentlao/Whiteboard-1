@@ -90,7 +90,9 @@
         }
         else
         {
-            [[[UIAlertView alloc] initWithTitle:@"Oops" message:@"Unable to compose an email." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:@"Unable to compose an email" preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive handler:nil]];
+            [self presentViewController:alertController animated:YES completion:nil];
         }
     }
 }
@@ -185,13 +187,8 @@
     switch (result)
     {
         case MFMailComposeResultCancelled:
-        {
-            // user cancelled
-            break;
-        }
         case MFMailComposeResultSaved:
         {
-            // user saved
             break;
         }
         case MFMailComposeResultSent:
@@ -202,7 +199,9 @@
         }
         case MFMailComposeResultFailed:
         {
-            [[[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Error" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+            [alertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDestructive handler:nil]];
+            [self presentViewController:alertController animated:YES completion:nil];
             break;
         }
         default:
