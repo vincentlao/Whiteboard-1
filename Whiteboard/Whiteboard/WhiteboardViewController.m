@@ -7,7 +7,6 @@
 //
 
 #import "WhiteboardViewController.h"
-#import "RealmManager.h"
 
 #define THICKNESS 10.0f
 #define STOP_TITLE @"Stop"
@@ -26,9 +25,6 @@
 @property (nonatomic, readwrite) CGPoint lastPoint;
 @property (nonatomic, readwrite) CGFloat thickness;
 @property (nonatomic, readwrite) CGColorRef colorRef;
-@property (strong, nonatomic) NSMutableArray *drawingArray;
-@property (strong, nonatomic) NSMutableArray *undoArray;
-@property (strong, nonatomic) NSMutableArray *playbackArray;
 @property (nonatomic, readwrite) NSInteger playbackFrame;
 @property (nonatomic, readwrite) NSInteger drawLineFrame;
 @end
@@ -42,9 +38,6 @@
     self.thickness = THICKNESS;
     [self.widthSlider setValue:THICKNESS animated:YES];
     self.colorRef = [UIColor blackColor].CGColor;
-    self.drawingArray = [NSMutableArray new];
-    self.undoArray = [NSMutableArray new];
-    self.playbackArray = [NSMutableArray new];
     self.playbackFrame = 1;
     self.drawLineFrame = 1;
 }
@@ -66,48 +59,19 @@
         UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Discard Drawing?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
         [alertController addAction:[UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDestructive handler:^(UIAlertAction *action) {
             self.primaryImageView.image = nil;
-            [self.drawingArray removeAllObjects];
-            [self.undoArray removeAllObjects];
-            [self.playbackArray removeAllObjects];
-            [alertController dismissViewControllerAnimated:YES completion:nil];
         }]];
         [alertController addAction:[UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-            [alertController dismissViewControllerAnimated:YES completion:nil];
         }]];
         [self presentViewController:alertController animated:YES completion:nil];
     }
 }
 - (IBAction)undoAction:(id)sender
 {
-    if ([self.drawingArray lastObject] != nil)
-    {
-        [self.undoArray addObject:[self.drawingArray lastObject]];
-        [self.drawingArray removeLastObject];
-    }
-    if ([self.drawingArray count] > 0)
-    {
-        self.primaryImageView.image = [self.drawingArray lastObject];
-    }
-    else
-    {
-        self.primaryImageView.image = nil;
-    }
+    // TODO
 }
 - (IBAction)redoAction:(id)sender
 {
-    if ([self.undoArray lastObject] != nil)
-    {
-        [self.drawingArray addObject:[self.undoArray lastObject]];
-        [self.undoArray removeLastObject];
-    }
-    if ([self.drawingArray count] > 0)
-    {
-        self.primaryImageView.image = [self.drawingArray lastObject];
-    }
-    else
-    {
-        self.primaryImageView.image = nil;
-    }
+    // TODO
 }
 - (IBAction)emailAction:(id)sender
 {
@@ -162,53 +126,6 @@
     }]];
     [self presentViewController:alertController animated:YES completion:nil];
 }
-- (IBAction)playAction:(UIBarButtonItem *)sender
-{
-    if ([self.playbackArray count] > 0) // FIXME: Playback is broken with uploaded image & undo/redo system.
-    {
-        if ([sender.title isEqualToString:STOP_TITLE])
-        {
-            self.primaryImageView.hidden = NO;
-            [self.playImageView stopAnimating];
-            [sender setTitle:PLAY_TITLE];
-            self.isPlaying = NO;
-        }
-        else
-        {
-            self.isPlaying = YES;
-            self.primaryImageView.hidden = YES;
-            [sender setTitle:STOP_TITLE];
-            self.playImageView.animationImages = self.playbackArray;
-            float frames = ([self.playbackArray count] * 1) / 30;
-            self.playImageView.animationDuration = frames;
-            self.playImageView.animationRepeatCount = 0;
-            [self.playImageView startAnimating];
-        }
-    }
-}
--(IBAction)saveAction:(id)sender
-{
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Save" message:@"Title and Author" preferredStyle:UIAlertControllerStyleAlert];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"Title";
-    }];
-    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-        textField.placeholder = @"Author";
-    }];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Save" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        UIImage *image = self.primaryImageView.image;
-        NSData *imgData = UIImagePNGRepresentation(image);
-        [[RealmManager sharedInstance] saveDrawing:imgData withTitle:alertController.textFields[0].text andAuthor:alertController.textFields[1].text];
-        self.primaryImageView.image = nil;
-        [self.drawingArray removeAllObjects];
-        [self.undoArray removeAllObjects];
-        [self.playbackArray removeAllObjects];
-    }]];
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-        
-    }]];
-    [self presentViewController:alertController animated:YES completion:nil];
-}
 - (IBAction)eraseAction:(id)sender
 {
     self.colorRef = self.view.backgroundColor.CGColor;
@@ -260,7 +177,7 @@
         [drawingImage drawInRect:self.view.frame];
         UIImage *mergedImage = UIGraphicsGetImageFromCurrentImageContext();
         self.primaryImageView.image = mergedImage;
-        [self.drawingArray addObject:mergedImage];
+//        [self.drawingArray addObject:mergedImage];
         UIGraphicsEndPDFContext();
     }];
 }
@@ -283,9 +200,6 @@
         {
             // user sent
             self.primaryImageView.image = nil;
-            [self.drawingArray removeAllObjects];
-            [self.undoArray removeAllObjects];
-            [self.playbackArray removeAllObjects];
             break;
         }
         case MFMailComposeResultFailed:
@@ -344,7 +258,7 @@
         self.secondaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
         NSData *imgData = UIImagePNGRepresentation(self.secondaryImageView.image);
-        [[RealmManager sharedInstance] savePlayback:imgData andFrame:self.playbackFrame];
+//        [[RealmManager sharedInstance] savePlayback:imgData andFrame:self.playbackFrame];
         self.playbackFrame++;
     }
 }
@@ -356,7 +270,7 @@
         [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0f];
         self.primaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
         NSData *imgData = UIImagePNGRepresentation(self.primaryImageView.image);
-        [[RealmManager sharedInstance] saveDrawLine:imgData andFrame:self.drawLineFrame];
+//        [[RealmManager sharedInstance] saveDrawLine:imgData andFrame:self.drawLineFrame];
         self.drawLineFrame++;
         self.secondaryImageView.image = nil;
         UIGraphicsEndImageContext();
