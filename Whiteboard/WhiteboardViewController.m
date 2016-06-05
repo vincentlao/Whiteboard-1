@@ -254,7 +254,7 @@
         CGContextStrokePath(UIGraphicsGetCurrentContext());
         self.secondaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-        NSData *imgData = UIImagePNGRepresentation(self.secondaryImageView.image);
+//        NSData *imgData = UIImagePNGRepresentation(self.secondaryImageView.image);
 //        [[RealmManager sharedInstance] savePlayback:imgData andFrame:self.playbackFrame];
         self.playbackFrame++;
     }
@@ -266,7 +266,7 @@
         [self.primaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
         [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0f];
         self.primaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
-        NSData *imgData = UIImagePNGRepresentation(self.primaryImageView.image);
+//        NSData *imgData = UIImagePNGRepresentation(self.primaryImageView.image);
 //        [[RealmManager sharedInstance] saveDrawLine:imgData andFrame:self.drawLineFrame];
         self.drawLineFrame++;
         self.secondaryImageView.image = nil;
