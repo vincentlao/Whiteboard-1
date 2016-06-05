@@ -9,8 +9,6 @@
 #import "WhiteboardViewController.h"
 
 #define THICKNESS 10.0f
-#define STOP_TITLE @"Stop"
-#define PLAY_TITLE @"Playback"
 
 @import MessageUI;
 @import MobileCoreServices;
@@ -25,8 +23,6 @@
 @property (nonatomic, readwrite) CGPoint lastPoint;
 @property (nonatomic, readwrite) CGFloat thickness;
 @property (nonatomic, readwrite) CGColorRef colorRef;
-@property (nonatomic, readwrite) NSInteger playbackFrame;
-@property (nonatomic, readwrite) NSInteger drawLineFrame;
 @end
 
 @implementation WhiteboardViewController
@@ -38,12 +34,70 @@
     self.thickness = THICKNESS;
     [self.widthSlider setValue:THICKNESS animated:YES];
     self.colorRef = [UIColor blackColor].CGColor;
-    self.playbackFrame = 1;
-    self.drawLineFrame = 1;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+}
+#pragma mark - Touch events
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint point = [touch locationInView:touch.view];
+    self.lastPoint = point;
+}
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint point = [touch locationInView:touch.view];
+    if (self.isPlaying == NO)
+    {
+        [self drawToPoint:point fromPoint:self.lastPoint WithThickness:self.thickness andColorRef:self.colorRef];
+    }
+    self.lastPoint = point;
+    self.didMoved = YES;
+}
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint point = [touch locationInView:touch.view];
+    if (self.didMoved == NO && self.isPlaying == NO)
+    {
+        [self drawToPoint:point fromPoint:self.lastPoint WithThickness:self.thickness andColorRef:self.colorRef];
+    }
+    [self saveImageContextToPrimary];
+}
+#pragma mark - Drawing
+-(void)drawToPoint:(CGPoint)toPoint fromPoint:(CGPoint)fromPoint WithThickness:(CGFloat)thickness andColorRef:(CGColorRef)colorRef
+{
+    @autoreleasepool {
+        UIGraphicsBeginImageContext(self.view.frame.size);
+        [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+        CGContextMoveToPoint(UIGraphicsGetCurrentContext(), fromPoint.x, fromPoint.y);
+        CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), toPoint.x, toPoint.y);
+        CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
+        CGContextSetLineWidth(UIGraphicsGetCurrentContext(), thickness);
+        CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), colorRef);
+        CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModeNormal);
+        CGContextStrokePath(UIGraphicsGetCurrentContext());
+        self.secondaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+//        NSData *imgData = UIImagePNGRepresentation(self.secondaryImageView.image);
+//        [[RealmManager sharedInstance] savePlayback:imgData andFrame:self.playbackFrame];
+    }
+}
+-(void)saveImageContextToPrimary
+{
+    @autoreleasepool {
+        UIGraphicsBeginImageContext(self.primaryImageView.frame.size);
+        [self.primaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
+        [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0f];
+        self.primaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
+//        NSData *imgData = UIImagePNGRepresentation(self.primaryImageView.image);
+//        [[RealmManager sharedInstance] saveDrawLine:imgData andFrame:self.drawLineFrame];
+        self.secondaryImageView.image = nil;
+        UIGraphicsEndImageContext();
+    }
 }
 #pragma mark - IBActions
 - (IBAction)sliderValueChanged:(UISlider *)sender
@@ -100,7 +154,7 @@
 {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Upload a photo" message:@"Choose from .." preferredStyle:UIAlertControllerStyleAlert];
     [alertController addAction:[UIAlertAction actionWithTitle:@"Camera" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-       
+        
         [alertController dismissViewControllerAnimated:YES completion:nil];
 #if TARGET_IPHONE_SIMULATOR
         NSLog(@"On Simulator - Camera is unavailable.");
@@ -177,7 +231,7 @@
         [drawingImage drawInRect:self.view.frame];
         UIImage *mergedImage = UIGraphicsGetImageFromCurrentImageContext();
         self.primaryImageView.image = mergedImage;
-//        [self.drawingArray addObject:mergedImage];
+        //        [self.drawingArray addObject:mergedImage];
         UIGraphicsEndPDFContext();
     }];
 }
@@ -210,67 +264,5 @@
         }
     }
     [self dismissViewControllerAnimated:YES completion:^(void) {}];
-}
-#pragma mark - Touch events
--(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [[event allTouches] anyObject];
-    CGPoint point = [touch locationInView:touch.view];
-    self.lastPoint = point;
-}
--(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [[event allTouches] anyObject];
-    CGPoint point = [touch locationInView:touch.view];
-    if (self.isPlaying == NO)
-    {
-        [self drawToPoint:point fromPoint:self.lastPoint WithThickness:self.thickness andColorRef:self.colorRef];
-    }
-    self.lastPoint = point;
-    self.didMoved = YES;
-}
--(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [[event allTouches] anyObject];
-    CGPoint point = [touch locationInView:touch.view];
-    if (self.didMoved == NO && self.isPlaying == NO)
-    {
-        [self drawToPoint:point fromPoint:self.lastPoint WithThickness:self.thickness andColorRef:self.colorRef];
-    }
-    [self saveImageContextToPrimary];
-}
-#pragma mark - Drawing
--(void)drawToPoint:(CGPoint)toPoint fromPoint:(CGPoint)fromPoint WithThickness:(CGFloat)thickness andColorRef:(CGColorRef)colorRef
-{
-    @autoreleasepool {
-        UIGraphicsBeginImageContext(self.view.frame.size);
-        [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-        CGContextMoveToPoint(UIGraphicsGetCurrentContext(), fromPoint.x, fromPoint.y);
-        CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), toPoint.x, toPoint.y);
-        CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-        CGContextSetLineWidth(UIGraphicsGetCurrentContext(), thickness);
-        CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), colorRef);
-        CGContextSetBlendMode(UIGraphicsGetCurrentContext(),kCGBlendModeNormal);
-        CGContextStrokePath(UIGraphicsGetCurrentContext());
-        self.secondaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-//        NSData *imgData = UIImagePNGRepresentation(self.secondaryImageView.image);
-//        [[RealmManager sharedInstance] savePlayback:imgData andFrame:self.playbackFrame];
-        self.playbackFrame++;
-    }
-}
--(void)saveImageContextToPrimary
-{
-    @autoreleasepool {
-        UIGraphicsBeginImageContext(self.primaryImageView.frame.size);
-        [self.primaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0];
-        [self.secondaryImageView.image drawInRect:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height) blendMode:kCGBlendModeNormal alpha:1.0f];
-        self.primaryImageView.image = UIGraphicsGetImageFromCurrentImageContext();
-//        NSData *imgData = UIImagePNGRepresentation(self.primaryImageView.image);
-//        [[RealmManager sharedInstance] saveDrawLine:imgData andFrame:self.drawLineFrame];
-        self.drawLineFrame++;
-        self.secondaryImageView.image = nil;
-        UIGraphicsEndImageContext();
-    }
 }
 @end
