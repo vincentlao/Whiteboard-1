@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="oPD-VS-vL7">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
@@ -199,7 +198,7 @@
         <!--Home-->
         <scene sceneID="2pG-T3-YJ6">
             <objects>
-                <viewController id="9KY-qn-S6f" sceneMemberID="viewController">
+                <viewController id="9KY-qn-S6f" customClass="HomeViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="l49-Dw-Ofm"/>
                         <viewControllerLayoutGuide type="bottom" id="FRX-wp-11R"/>
@@ -209,7 +208,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8bG-vA-C9L">
-                                <rect key="frame" x="16" y="252" width="569" height="50"/>
+                                <rect key="frame" x="16" y="226" width="569" height="50"/>
                                 <color key="backgroundColor" red="0.42655369640000002" green="0.475846082" blue="0.4802647531" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="7B7-CP-JJv"/>
@@ -225,24 +224,14 @@
                                     </mask>
                                 </variation>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try drawing a lion or tiger or elephant or nature or abstract or use your imagination., art is limitless." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bRP-eZ-cWZ">
-                                <rect key="frame" x="160" y="119" width="280" height="67"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="280" id="l29-B7-eaT"/>
-                                    <constraint firstAttribute="height" constant="67" id="xXS-bk-n5A"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
-                                <color key="textColor" red="0.111818932" green="0.11183650050000001" blue="0.1118125319" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share with family and friends." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="22j-Ma-3En">
-                                <rect key="frame" x="200" y="310" width="200" height="18"/>
+                                <rect key="frame" x="200" y="284" width="200" height="18"/>
                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                 <color key="textColor" red="0.111818932" green="0.11183650050000001" blue="0.1118125319" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TYj-kU-Rqw">
-                                <rect key="frame" x="16" y="194" width="568" height="50"/>
+                                <rect key="frame" x="16" y="168" width="568" height="50"/>
                                 <color key="backgroundColor" red="0.15101002159999999" green="0.56891876460000002" blue="0.43715286250000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="CMt-He-SPT"/>
@@ -261,6 +250,22 @@
                                     <segue destination="BYZ-38-t0r" kind="show" id="taK-xA-sd5"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try drawing a lion or tiger or elephant or nature or abstract or use your imagination." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bRP-eZ-cWZ">
+                                <rect key="frame" x="16" y="119" width="568" height="41"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="280" id="l29-B7-eaT"/>
+                                    <constraint firstAttribute="height" constant="67" id="xXS-bk-n5A"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
+                                <color key="textColor" red="0.111818932" green="0.11183650050000001" blue="0.1118125319" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="l29-B7-eaT"/>
+                                        <exclude reference="xXS-bk-n5A"/>
+                                    </mask>
+                                </variation>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.90823972230000005" green="0.92638683320000004" blue="0.93171715740000005" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -271,6 +276,7 @@
                             <constraint firstItem="TYj-kU-Rqw" firstAttribute="leading" secondItem="22j-Ma-3En" secondAttribute="leading" id="A9R-uA-8Iw"/>
                             <constraint firstAttribute="trailing" secondItem="TYj-kU-Rqw" secondAttribute="trailing" constant="16" id="ELI-37-Whg"/>
                             <constraint firstItem="TYj-kU-Rqw" firstAttribute="trailing" secondItem="22j-Ma-3En" secondAttribute="trailing" id="Ieh-vA-lw5"/>
+                            <constraint firstAttribute="trailing" secondItem="bRP-eZ-cWZ" secondAttribute="trailing" constant="16" id="J5B-Cg-Mv4"/>
                             <constraint firstItem="bRP-eZ-cWZ" firstAttribute="top" secondItem="l49-Dw-Ofm" secondAttribute="bottom" constant="153" id="KLP-z2-Tzq"/>
                             <constraint firstItem="22j-Ma-3En" firstAttribute="top" secondItem="8bG-vA-C9L" secondAttribute="bottom" constant="8" id="NoH-DQ-77r"/>
                             <constraint firstItem="TYj-kU-Rqw" firstAttribute="top" secondItem="KE0-pq-gJ8" secondAttribute="top" constant="248" id="Rot-Xn-DaH"/>
@@ -278,6 +284,7 @@
                             <constraint firstItem="bRP-eZ-cWZ" firstAttribute="centerX" secondItem="KE0-pq-gJ8" secondAttribute="centerX" id="SlP-29-2ec"/>
                             <constraint firstItem="22j-Ma-3En" firstAttribute="trailing" secondItem="8bG-vA-C9L" secondAttribute="trailing" id="UeE-fg-fYj"/>
                             <constraint firstItem="TYj-kU-Rqw" firstAttribute="leading" secondItem="8bG-vA-C9L" secondAttribute="leading" id="aED-9o-5Ng"/>
+                            <constraint firstItem="bRP-eZ-cWZ" firstAttribute="leading" secondItem="KE0-pq-gJ8" secondAttribute="leading" constant="16" id="faC-2D-FXh"/>
                             <constraint firstItem="TYj-kU-Rqw" firstAttribute="leading" secondItem="bRP-eZ-cWZ" secondAttribute="leading" id="ljh-Cc-cv9"/>
                             <constraint firstItem="22j-Ma-3En" firstAttribute="leading" secondItem="8bG-vA-C9L" secondAttribute="leading" id="mDn-db-esz"/>
                             <constraint firstItem="TYj-kU-Rqw" firstAttribute="leading" secondItem="KE0-pq-gJ8" secondAttribute="leading" constant="16" id="mMw-GC-hGe"/>
@@ -289,14 +296,15 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="90g-1G-1kR"/>
+                                <exclude reference="KLP-z2-Tzq"/>
+                                <exclude reference="SlP-29-2ec"/>
                                 <exclude reference="1SO-NI-cXL"/>
                                 <exclude reference="A9R-uA-8Iw"/>
                                 <exclude reference="Ieh-vA-lw5"/>
                                 <exclude reference="Rot-Xn-DaH"/>
                                 <exclude reference="aED-9o-5Ng"/>
                                 <exclude reference="ljh-Cc-cv9"/>
-                                <exclude reference="90g-1G-1kR"/>
-                                <exclude reference="KLP-z2-Tzq"/>
                                 <exclude reference="rik-ea-LNU"/>
                                 <exclude reference="UeE-fg-fYj"/>
                                 <exclude reference="mDn-db-esz"/>
